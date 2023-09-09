@@ -1,0 +1,141 @@
+import random
+class Agent:
+    def __init__(self,n,x,y,l):
+        self._name=n
+        self._x=x
+        self._y=y
+        self._rumors=l
+    def __str__(self):
+        return f'{self._name} @ ({self._x},{self._y}) : {self._rumors}'
+    
+    def move(self):
+        x=random.randrange(1,6)
+        if x==1:
+            self._x+=1
+        elif x==2:
+            self._x-=1
+        elif x==3:
+            self._y+=1
+        elif x==4:
+            self._y-=1
+            
+    def hear(self,r):
+        if r not in self._rumors:
+            self._rumors.append(r)
+        
+    def knows_all(self,rums):
+        for i in rums:
+            
+            if  i  not in self._rumors:
+                   
+                return False
+            
+            
+        return True
+            
+        
+    def meets(self,a2):
+        if self._x==a2._x and self._y==a2._y:
+            return True
+        else:
+            return False
+        
+    def share(self,a2):
+        if self.meets(a2)==True:
+            for i in self._rumors:
+                a2.hear(i)
+            for j in a2._rumors:
+                self.hear(j)
+
+################################################################################################3
+
+def main():
+    
+    rs=0
+    
+    x=['Rumor 1', 'Rumor 2']
+    for j in range(5000):
+        alice = Agent('Alice',0,0,[ ])
+        bob = Agent('Bob',1,0,['Rumor 1'])
+        carol = Agent('Carol',0,1,['Rumor 2']) 
+        for i in range(100):
+            
+            alice.move()
+            bob.move()
+            carol.move()
+            alice.share(bob)
+            bob.share(carol)
+            carol.share(alice)
+            
+        if alice.knows_all(x) and bob.knows_all(x) and carol.knows_all(x)==True:
+            rs+=1
+        
+    print(rs/5000)
+    
+    
+        
+main()
+
+#####################################################################################33
+    
+print("### TEST 1 ###")
+bobby = Agent('Bob', 1, 0, ['Rumor 1'])
+print(bobby._name, '(should be Bob)')
+print(bobby._x, bobby._y, '(should be 1, 0)')
+print(bobby._rumors, '(should be [\'Rumor 1\'])')
+
+print('\n### TEST 2 ###')
+print('The line below should look like: Bob @ (1, 0): [\'Rumor 1\']')
+print(bobby)    
+
+print('\n### TEST 3 ###')
+print('You should see one of Bob\'s coordinates change each time (or not)')
+bobby.move()
+print(bobby)
+bobby.move()
+print(bobby)
+bobby.move()
+print(bobby)
+bobby.move()
+print(bobby)
+bobby.move()
+print(bobby)
+
+print('\n### TEST 4 ###')
+bobby = Agent('Bob', 1, 0, ['Rumor 1'])
+bobby.hear('Wild New Rumor')
+bobby.hear('Rumor 1')
+bobby.hear('Rumor 1')
+bobby.hear('Rumor 1')
+print('The rumor list below should be JUST [\'Rumor 1\', \'Wild New Rumor\']')
+print(bobby)        
+
+
+
+print('\n### TEST 5 ###')
+print(bobby.knows_all(['Rumor 1', 'Wild New Rumor']), '(should be True)')
+print(bobby.knows_all(['Rumor 1', 'Other Rumor']), '(should be False)')
+
+print('\n### TEST 6 ###')
+car = Agent('Carol', 0, 1, ['Rumor 2'])
+dav = Agent('David', 1, 0, ['Rumor 1', 'Rumor 3'])
+print(bobby.meets(car), '(should be False)')
+print(bobby.meets(dav), '(should be True)')
+
+print('\n### TEST 7 ###')
+bobby.share(car)
+print('The rumor list below should be [\'Rumor 1\',\'Wild New Rumor\']')
+print(bobby)
+print('The rumor list below should be [\'Rumor 2\']')
+print(car)
+
+bobby.share(dav)
+print('The rumor lists below should both be, in some order, [\'Rumor 1\',\'Wild New Rumor\', \'Rumor 3\']')
+print(bobby)
+print(dav)
+  
+        
+    
+    
+        
+    
