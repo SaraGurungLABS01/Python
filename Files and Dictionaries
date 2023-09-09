@@ -1,0 +1,45 @@
+eng=open('english.txt','r')
+eng_r=eng.read()
+spn=open('spanish.txt','r')
+
+eng_list=eng_r.split()
+spn_list=[]
+for j in spn:
+    a=j.strip()
+    spn_list.append(a)
+    
+
+translate={}
+for i in range(len(eng_list)):
+    translate[eng_list[i]]=spn_list[i]
+
+user_entry=input('Enter a name of a file:')
+user_file=open(f'{user_entry}','r')
+line=[]
+for i in user_file:
+    words=i.split()
+    line.append(words)
+
+spanish=open('my_spanish.txt','w')
+for row in line:
+    
+    for w in row:
+        
+        try:
+            first=translate[w]
+            
+            spanish.write(first)
+            spanish.write(" ")
+            
+        except:
+            first='??'
+            spanish.write(first)
+            spanish.write(" ")
+    spanish.write('\n')
+
+spanish.close()
+
+        
+            
+    
+   
