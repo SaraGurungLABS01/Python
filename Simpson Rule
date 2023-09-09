@@ -1,0 +1,26 @@
+import math
+
+a=float(input('Enter the value of A:'))
+b=float(input('Enter the value of B:'))
+N=int(input('Enter an even integer:'))
+dx=(b-a)/(N)
+def f_of_x(x):
+    pi=1/math.sqrt(2*math.pi)
+    e=(math.exp((-x**2)/2))
+    exp=pi*e
+    return exp
+counting_sum=0
+for i in range(N+1):
+    x=a+(i*dx)
+    if i==0:
+        counting_sum=f_of_x(x)
+    elif i%2==1:
+        counting_sum+=(4*(f_of_x(x)))
+    elif i%2==0 and i!=N and i!=0:
+        counting_sum+=(2*f_of_x(x))
+    else:
+        counting_sum+=f_of_x(x)
+    print(counting_sum)
+solution=(dx/3)*counting_sum
+print(solution)
+
